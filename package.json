@@ -15,14 +15,24 @@
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
+    "node-fetch": "^2.7.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.58.1",
+    "react-icons": "^5.5.0",
     "react-select": "^5.10.1"
   },
   "main": "index.js",
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michelrodrigo/pedido_hortifruti.git"
+  },
+  "bugs": {
+    "url": "https://github.com/michelrodrigo/pedido_hortifruti/issues"
+  },
+  "homepage": "https://github.com/michelrodrigo/pedido_hortifruti#readme",
   "description": ""
 }

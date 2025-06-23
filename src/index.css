@@ -3,3 +3,55 @@ body {
   margin: 0;
   font-family: sans-serif;
 }
+
+/* Estilo do formulário */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 10px;
+  max-width: auto;
+  margin: 0 auto;
+}
+
+/* Estilo dos inputs e botões */
+input {
+  font-size: 30px;
+}
+
+input[type="radio"] {
+  accent-color: #4CAF50;
+  transform: scale(3);
+
+}
+
+button {
+  padding: 12px;
+  font-size: 30px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* Estilo dos botões */
+button {
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #ccc;
+}
+
+/* Responsividade para telas pequenas */
+@media (max-width: 600px) {
+  form {
+    padding: 12px;
+    max-width: 100%;
+  }
+
+  input,
+  button {
+    font-size: 18px;
+  }
+}
