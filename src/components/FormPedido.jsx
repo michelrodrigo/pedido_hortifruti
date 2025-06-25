@@ -1,9 +1,9 @@
 // src/components/FormPedido.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, useFieldArray, Controller, useWatch } from 'react-hook-form';
 import Select, { components } from 'react-select';
 import produtos from '../products';
-import { FaTrashAlt } from 'react-icons/fa'; // FontAwesome
+import { FaTrashAlt, FaSpinner } from 'react-icons/fa'; // FontAwesome
 
 export default function FormPedido() {
   const { control, register, handleSubmit, reset, setValue, formState: {errors} } = useForm({
@@ -12,6 +12,8 @@ export default function FormPedido() {
   });
   const { fields, append, remove } = useFieldArray({ control, name: 'itens' });
   const itensWatch = useWatch({ control, name: 'itens', defaultValue: [] });
+  
+  const [loading, setLoading] = useState(false);
 
   // component for option in menu
   const Option = props => (
@@ -33,6 +35,7 @@ export default function FormPedido() {
   );
 
   const onSubmit = async data => {
+	  setLoading(true);
 	  try {
 		const pedidoFormatado = {
 		  nome: data.nome,
@@ -82,6 +85,8 @@ export default function FormPedido() {
 	  }
 	  catch (err) {
 		alert('Falha no envio: ' + err.message);
+	  } finally {
+		setLoading(false);
 	  }
 	};
 	
@@ -239,7 +244,32 @@ export default function FormPedido() {
         + Adicionar item
       </button>
 	  
-      <button type="submit" style={{ marginTop: '30px' }}>Finalizar pedido</button>
+      <button
+		  type="submit"
+		  style={{
+			marginTop: '30px',
+			display: 'flex',
+			alignItems: 'center',
+			justifyContent: 'center',
+			gap: '8px',
+			opacity: loading ? 0.7 : 1,
+			pointerEvents: loading ? 'none' : 'auto',
+			padding: '10px',
+			fontSize: '30px'
+		  }}
+		  disabled={loading}
+		>
+		  {loading && (
+			<FaSpinner
+			  className="spinner"
+			  style={{
+				animation: 'spin 1s linear infinite',
+				fontSize: '30px'
+			  }}
+			/>
+		  )}
+		  {loading ? 'Enviando...' : 'Finalizar pedido'}
+		</button>
     </form>
   );
 }
