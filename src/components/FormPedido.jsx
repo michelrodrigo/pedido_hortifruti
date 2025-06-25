@@ -45,15 +45,23 @@ export default function FormPedido() {
 		};
 
 		console.log("JSON ENVIADO:", pedidoFormatado); // 🔍 Veja no console do navegador
-
+	 
 		
-		const resp = await fetch('http://localhost:3000/enviar-pedido', {
+		const resp = await fetch('/enviar-pedido', {
 		  method: 'POST',
 		  headers: { 'Content-Type': 'application/json' },
 		  body: JSON.stringify(pedidoFormatado)
 		});
 
-		const json = await resp.json();
+		const text = await resp.text();
+		console.log('Resposta recebida (text):', text);
+
+		let json;
+		try {
+		  json = JSON.parse(text);
+		} catch (e) {
+		  throw new Error('Resposta do servidor não é JSON válido.');
+		}
 
 		if (json.success) {
 		  alert('Pedido enviado com sucesso!');
@@ -71,10 +79,13 @@ export default function FormPedido() {
 		} else {
 		  alert('Erro: ' + (json.error || 'desconhecido'));
 		}
-	  } catch (err) {
+	  }
+	  catch (err) {
 		alert('Falha no envio: ' + err.message);
 	  }
 	};
+	
+	
 
 	
 	const gerarResumoPedido = (data) => {

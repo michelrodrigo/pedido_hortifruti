@@ -1,0 +1,9 @@
+[build]
+  functions = "netlify/functions"
+  publish = "dist"  # ajuste se seu build for em outro lugar (ex: build, public)
+
+[[redirects]]
+  from = "/enviar-pedido"
+  to = "/.netlify/functions/enviar-pedido"
+  method = "POST"
+  status = 200
