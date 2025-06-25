@@ -40,6 +40,8 @@ export default function FormPedido() {
 		const pedidoFormatado = {
 		  nome: data.nome,
 		  telefone: data.telefone,
+		  dataEntrega: data.dataEntrega,
+		  endereco: data.endereco,
 		  pedido: data.itens.map(item => ({
 			  produto: item.produto?.label || 'Produto não selecionado',
 			  quantidade: Number(item.quantidade) || 0,
@@ -101,7 +103,13 @@ export default function FormPedido() {
 		return `• ${nomeProduto} (${item.quantidade} ${item.unidade})`;
 	  }).join('\n');
 
-  return `Olá! Meu nome é ${nome}.\nGostaria de fazer o seguinte pedido:\n${itens}`;
+  return `Olá! Meu nome é ${nome}.
+	Gostaria de fazer o seguinte pedido para o dia ${data.dataEntrega}:
+
+	${itens}
+
+	Endereço de entrega:
+	${data.endereco}`;
 };
   
 	const unidades = [
@@ -139,6 +147,26 @@ export default function FormPedido() {
 		<p style={{ color: 'red', marginTop: 4 }}>{errors.telefone.message}</p>
 	  )}
 	</div>
+		<div style={{ marginBottom: 16 }}>
+	  <label>Data de entrega:</label>
+	  <input
+		type="date"
+		{...register('dataEntrega', { required: 'Informe a data de entrega.' })}
+		style={{ padding: '8px', width: '100%', boxSizing: 'border-box' }}
+	  />
+	  {errors.dataEntrega && <p style={{ color: 'red' }}>{errors.dataEntrega.message}</p>}
+	</div>
+
+	<div style={{ marginBottom: 16 }}>
+	  
+	  <textarea
+		{...register('endereco', { required: 'Informe o endereço de entrega.' })}
+		placeholder="Endereço de entrega: Rua, número, bairro..."
+		style={{ padding: '8px', width: '100%', boxSizing: 'border-box', fontSize: '30px' }}
+	  />
+	  {errors.endereco && <p style={{ color: 'red' }}>{errors.endereco.message}</p>}
+	</div>
+	
       {fields.map((field, idx) => (
         <div key={field.id} style={{ marginBottom: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
           <Controller
@@ -198,7 +226,7 @@ export default function FormPedido() {
 				  const novo = Math.max(atual - 1, 0);
 				  setValue(`itens.${idx}.quantidade`, novo);
 				}}
-				style={{ padding: '4px 8px' }}
+				style={{ padding: '10px 10px' }}
 			  >
 				–
 			  </button>
@@ -208,7 +236,7 @@ export default function FormPedido() {
 				step="any"
 				value={itensWatch[idx]?.quantidade || ''}
 				placeholder="Quantidade"
-				style={{ width: 80, textAlign: 'center', fontSize: '40px' }}
+				style={{ width: 150, height: 50, textAlign: 'center', fontSize: '20px' }}
 				{...register(`itens.${idx}.quantidade`, { required: true })}
 			  />
 
@@ -219,7 +247,7 @@ export default function FormPedido() {
 				  const novo = atual + 1;
 				  setValue(`itens.${idx}.quantidade`, novo);
 				}}
-				style={{ padding: '4px 8px' }}
+				style={{ padding: '10px 10px' }}
 			  >
 				+
 			  </button>
@@ -255,7 +283,7 @@ export default function FormPedido() {
 			opacity: loading ? 0.7 : 1,
 			pointerEvents: loading ? 'none' : 'auto',
 			padding: '10px',
-			fontSize: '30px'
+			fontSize: '40px'
 		  }}
 		  disabled={loading}
 		>
@@ -264,7 +292,7 @@ export default function FormPedido() {
 			  className="spinner"
 			  style={{
 				animation: 'spin 1s linear infinite',
-				fontSize: '30px'
+				fontSize: '40px'
 			  }}
 			/>
 		  )}
