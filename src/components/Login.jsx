@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // 👈 adicionado
+import { useNavigate } from 'react-router-dom';
 
-export default function Login() {
+export default function Login({ onLoginSucesso }) {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  const navigate = useNavigate(); // 👈 usado para redirecionar
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-	setLoading(true); // 🌀 inicia o loading
+    setLoading(true);
+
     try {
       const resp = await fetch('/.netlify/functions/login-cliente', {
         method: 'POST',
@@ -17,11 +18,12 @@ export default function Login() {
         body: JSON.stringify({
           email,
           senha,
-          acao: 'login' // 👈 importante
+          acao: 'login',
         }),
       });
 
       const json = await resp.json();
+
       if (json.success) {
         const cliente = {
           nome: json.nome,
@@ -31,15 +33,20 @@ export default function Login() {
 
         localStorage.setItem('cliente', JSON.stringify(cliente));
 
-        navigate('/'); // 👈 redireciona para a página de pedido
+        // 👉 atualiza o estado global com os dados do cliente
+        if (onLoginSucesso) {
+          onLoginSucesso(cliente);
+        }
+
+        navigate('/');
       } else {
         alert('❌ Login inválido');
       }
     } catch (err) {
       alert('❌ Erro: ' + err.message);
     } finally {
-		setLoading(false); // ✅ encerra o loading mesmo com erro
-	  }
+      setLoading(false);
+    }
   };
 
   return (
@@ -60,14 +67,14 @@ export default function Login() {
         required
       />
       <button type="submit" disabled={loading}>
-		  {loading ? (
-			<>
-			  <span className="spinner" /> Entrando...
-			</>
-		  ) : (
-			'Entrar'
-		  )}
-		</button>
+        {loading ? (
+          <>
+            <span className="spinner" /> Entrando...
+          </>
+        ) : (
+          'Entrar'
+        )}
+      </button>
     </form>
   );
 }

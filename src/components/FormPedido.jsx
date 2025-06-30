@@ -12,14 +12,32 @@ export default function FormPedido() {
 	defaultValues: { itens: [{ produto: '', unidade: 'unidade', quantidade: '' }] }
   });
   useEffect(() => {
-	  const clienteSalvo = localStorage.getItem("cliente");
-	  if (clienteSalvo) {
-		const dados = JSON.parse(clienteSalvo);
-		setValue("nome", dados.nome || "");
-		setValue("telefone", dados.telefone || "");
-		setValue("endereco", dados.endereco || "");
-	  }
-	}, []);
+	  const atualizarDadosCliente = () => {
+		const clienteSalvo = localStorage.getItem("cliente");
+		if (clienteSalvo) {
+		  const dados = JSON.parse(clienteSalvo);
+		  setValue("nome", dados.nome || "");
+		  setValue("telefone", dados.telefone || "");
+		  setValue("endereco", dados.endereco || "");
+		} else {
+		  // Limpa os campos se não há cliente
+		  reset({
+			nome: '',
+			telefone: '',
+			endereco: '',
+			dataEntrega: '',
+			itens: [{ produto: '', unidade: 'unidade', quantidade: '' }]
+		  });
+		}
+	  };
+
+	  atualizarDadosCliente();
+
+	  // Verifica mudanças no localStorage a cada 1 segundo
+	  const intervalo = setInterval(atualizarDadosCliente, 1000);
+
+	  return () => clearInterval(intervalo);
+	}, [setValue, reset]);
   const { fields, append, remove } = useFieldArray({ control, name: 'itens' });
   const itensWatch = useWatch({ control, name: 'itens', defaultValue: [] });
   
