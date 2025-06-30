@@ -1,15 +1,25 @@
 // src/components/FormPedido.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm, useFieldArray, Controller, useWatch } from 'react-hook-form';
 import Select, { components } from 'react-select';
 import produtos from '../products';
 import { FaTrashAlt, FaSpinner } from 'react-icons/fa'; // FontAwesome
+
 
 export default function FormPedido() {
   const { control, register, handleSubmit, reset, setValue, formState: {errors} } = useForm({
     nome: '',
 	defaultValues: { itens: [{ produto: '', unidade: 'unidade', quantidade: '' }] }
   });
+  useEffect(() => {
+	  const clienteSalvo = localStorage.getItem("cliente");
+	  if (clienteSalvo) {
+		const dados = JSON.parse(clienteSalvo);
+		setValue("nome", dados.nome || "");
+		setValue("telefone", dados.telefone || "");
+		setValue("endereco", dados.endereco || "");
+	  }
+	}, []);
   const { fields, append, remove } = useFieldArray({ control, name: 'itens' });
   const itensWatch = useWatch({ control, name: 'itens', defaultValue: [] });
   
@@ -38,6 +48,7 @@ export default function FormPedido() {
 	  setLoading(true);
 	  try {
 		const pedidoFormatado = {
+		  acao: 'pedido',
 		  nome: data.nome,
 		  telefone: data.telefone,
 		  dataEntrega: data.dataEntrega,
@@ -78,7 +89,7 @@ export default function FormPedido() {
 
 		  // WhatsApp
 		  const msg = gerarResumoPedido(data);
-		  const numero = data.telefone.replace(/\D/g, '');
+		  const numero = String(data.telefone).replace(/\D/g, '');
 		  const url = `https://wa.me/55${numero}?text=${encodeURIComponent(msg)}`;
 		  window.open(url, '_blank');
 		} else {

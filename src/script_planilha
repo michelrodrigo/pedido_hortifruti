@@ -1,0 +1,81 @@
+function doPost(e) {
+  try {
+    const data = JSON.parse(e.postData.contents);
+    Logger.log('Recebido no POST: ' + JSON.stringify(data));
+
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Pedidos');
+
+    if (!data.nome || !data.telefone || !Array.isArray(data.pedido)) {
+      throw new Error('Dados incompletos ou formato incorreto');
+    }
+
+    data.pedido.forEach(item => {
+      Logger.log('Item do pedido: ' + JSON.stringify(item));
+      sheet.appendRow([
+        new Date(),
+        data.nome,
+        data.telefone,
+        data.dataEntrega,
+        data.endereco,
+        item.produto,
+        item.quantidade,
+        item.unidade
+      ]);
+    });
+
+    return ContentService
+      .createTextOutput(JSON.stringify({ success: true }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (err) {
+    Logger.log('Erro: ' + err.message);
+    return ContentService
+      .createTextOutput(JSON.stringify({ success: false, error: err.message }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function gerarListaDeCompras() {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Pedidos");
+  const outputSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Lista de Compras") || 
+                      SpreadsheetApp.getActiveSpreadsheet().insertSheet("Lista de Compras");
+  outputSheet.clear();
+
+  const dados = sheet.getDataRange().getValues();
+  const hoje = new Date();
+  const hojeFormatado = Utilities.formatDate(hoje, Session.getScriptTimeZone(), "yyyy-MM-dd");
+
+  const agregados = {};
+
+  for (let i = 1; i < dados.length; i++) {
+    const [data, nome, telefone, produto, quantidade, unidade] = dados[i];
+    const dataPedido = Utilities.formatDate(new Date(data), Session.getScriptTimeZone(), "yyyy-MM-dd");
+
+    if (dataPedido !== hojeFormatado) continue;
+
+    const chave = `${produto}__${unidade}`;
+    if (!agregados[chave]) {
+      agregados[chave] = { produto, unidade, total: 0 };
+    }
+
+    agregados[chave].total += Number(quantidade);
+  }
+
+  const agrupadoPorProduto = {};
+
+  for (const chave in agregados) {
+    const { produto, unidade, total } = agregados[chave];
+
+    if (!agrupadoPorProduto[produto]) {
+      agrupadoPorProduto[produto] = [];
+    }
+
+    agrupadoPorProduto[produto].push(`${total} ${unidade}`);
+  }
+
+  let linha = 1;
+  outputSheet.getRange(linha++, 1).setValue("Lista de Compras (Hoje)");
+  for (const produto in agrupadoPorProduto) {
+    outputSheet.getRange(linha++, 1).setValue(`${produto}: ${agrupadoPorProduto[produto].join(" + ")}`);
+  }
+}

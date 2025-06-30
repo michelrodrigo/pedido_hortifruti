@@ -6,7 +6,7 @@ exports.handler = async function (event, context) {
     const body = JSON.parse(event.body);
 
     const response = await fetch(
-      'https://script.google.com/macros/s/AKfycbyid602ZixHt5TaF3DHSj3qWoopd6lSj9haucEWzj3tDQLplrp76d6QacZTYdst0Wb8ww/exec',
+      'https://script.google.com/macros/s/AKfycby0ek3abNStHawb6F96CC1NIhF7BHlqYzkqidkjfBjbzUJ7Rfe844T-KYGHQd8wnnBf/exec',
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
