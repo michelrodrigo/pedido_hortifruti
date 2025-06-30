@@ -131,6 +131,7 @@ export default function FormPedido() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
 	<div style={{ marginBottom: 16 }}>
+	<label>Nome:</label>
 		<input
 		  {...register('nome', { required: 'Por favor, informe seu nome.' })}
 		  placeholder="Seu nome"
@@ -143,6 +144,7 @@ export default function FormPedido() {
 		)}
 	</div>
 	<div style={{ marginBottom: 16 }}>
+	  <label>Telefone:</label>
 	  <input
 		{...register('telefone', {
 		  required: 'Por favor, informe seu telefone.',
@@ -169,7 +171,7 @@ export default function FormPedido() {
 	</div>
 
 	<div style={{ marginBottom: 16 }}>
-	  
+	  <label>Endereço:</label>
 	  <textarea
 		{...register('endereco', { required: 'Informe o endereço de entrega.' })}
 		placeholder="Endereço de entrega: Rua, número, bairro..."
@@ -299,13 +301,7 @@ export default function FormPedido() {
 		  disabled={loading}
 		>
 		  {loading && (
-			<FaSpinner
-			  className="spinner"
-			  style={{
-				animation: 'spin 1s linear infinite',
-				fontSize: '40px'
-			  }}
-			/>
+			<span className="spinner" />
 		  )}
 		  {loading ? 'Enviando...' : 'Finalizar pedido'}
 		</button>

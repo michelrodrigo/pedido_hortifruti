@@ -46,7 +46,7 @@ function CadastroCliente() {
 
       <input placeholder="Nome" {...register("nome")} required />
       <input type="email" placeholder="Email" {...register("email")} required />
-      <input type="password" placeholder="Senha" {...register("senha")} required />
+      <input placeholder="Senha" {...register("senha")} required />
       <input placeholder="Telefone" {...register("telefone")} required />
       <input placeholder="Endereço de entrega" {...register("endereco")} required />
 

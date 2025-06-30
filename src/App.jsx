@@ -8,9 +8,10 @@ import Login from './components/Login';
 function App() {
   return (
     <Router>
-      <div>
+      <div >
+		<h1 style={{ textAlign: 'center', padding: '20px' }}>🍎 Villagio Della Fruta</h1>
         {/* Menu de navegação */}
-        <nav style={{ padding: '10px', borderBottom: '1px solid #ccc', display: 'flex', gap: '20px' }}>
+        <nav style={{ padding: '10px', borderBottom: '1px solid #ccc', display: 'flex', gap: '20px', fontSize: '30px', display: 'flex', justifyContent: 'center'}}>
           <Link to="/">🏠 Início</Link>
           <Link to="/cadastro">📝 Cadastro</Link>
           <Link to="/login">🔑 Login</Link>
