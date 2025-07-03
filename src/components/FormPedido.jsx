@@ -198,108 +198,131 @@ export default function FormPedido() {
 	  {errors.endereco && <p style={{ color: 'red' }}>{errors.endereco.message}</p>}
 	</div>
 	
-      {fields.map((field, idx) => (
-        <div key={field.id} style={{ marginBottom: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
-          <Controller
-            control={control}
-            name={`itens.${idx}.produto`}
-            rules={{ required: true }}
-            render={({ field }) => (
-			<div style={{flex: 3}}>
-              <Select
-                {...field}
-                options={produtos}
-                components={{ Option, SingleValue }}
-                placeholder="Selecione produto"
-				styles={{
-					control: (base) => ({
-					  ...base,
-					  fontSize: '30px', // tamanho da fonte da caixa principal
-					}),
-					option: (base) => ({
-					  ...base,
-					  fontSize: '30px', // tamanho da fonte das opções do menu dropdown
-					}),
-					singleValue: (base) => ({
-					  ...base,
-					  fontSize: '30px', // valor selecionado exibido
-					}),
-				  }}
-              />
-			  </div>
-            )}
-          />
-          <Controller
-			  control={control}
-			  name={`itens.${idx}.unidade`}
-			  defaultValue="unidade"
-			  render={({ field }) => (
-				<div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-				  {unidades.map((opt) => (
-					<label key={opt.value} style={{ display: 'flex', alignItems: 'center', gap: '15px', fontSize: '30px', cursor: 'pointer' }}>
-					  <input
-						type="radio"
-						value={opt.value}
-						checked={field.value === opt.value}
-						onChange={() => field.onChange(opt.value)}
-					  />
-					  {opt.label}
-					</label>
-				  ))}
-				</div>
-			  )}
-			/>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-			  <button
-				type="button"
-				onClick={() => {
-				  const atual = parseFloat(itensWatch[idx]?.quantidade || 0);
-				  const novo = Math.max(atual - 1, 0);
-				  setValue(`itens.${idx}.quantidade`, novo);
-				}}
-				style={{ padding: '10px 10px' }}
-			  >
-				–
-			  </button>
+      {fields.map((field, idx) => {
+		 const produtoSelecionado = itensWatch[idx]?.produto;
+		const unidadesDisponiveis = produtoSelecionado?.unidades || ['UN', 'KG'];
 
-			  <input
-				type="number"
-				step="any"
-				value={itensWatch[idx]?.quantidade || ''}
-				placeholder="Quantidade"
-				style={{ width: 150, height: 50, textAlign: 'center', fontSize: '20px' }}
-				{...register(`itens.${idx}.quantidade`, { required: true })}
+
+		  return (
+			<div key={field.id} style={{ marginBottom: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
+
+			  {/* Produto */}
+			  <Controller
+				control={control}
+				name={`itens.${idx}.produto`}
+				rules={{ required: 'Selecione um produto.' }}
+				render={({ field, fieldState }) => (
+				  <div style={{ flex: 3 }}>
+					<Select
+					  {...field}
+					  value={field.value || null}
+					  options={produtos}
+					  components={{ Option, SingleValue }}
+					  placeholder="Selecione produto"
+					  onChange={(selected) => {
+						field.onChange(selected);
+						if (selected?.unidades?.length) {
+						  setValue(`itens.${idx}.unidade`, selected.unidades[0]);
+						}
+					  }}
+					  styles={{
+						control: (base) => ({ ...base, fontSize: '30px' }),
+						option: (base) => ({ ...base, fontSize: '30px' }),
+						singleValue: (base) => ({ ...base, fontSize: '30px' }),
+					  }}
+					/>
+					{fieldState?.error && (
+					  <p style={{ color: 'red', fontSize: '16px' }}>{fieldState.error.message}</p>
+					)}
+				  </div>
+				)}
 			  />
 
+			  {/* Unidade (dinâmica) */}
+			  <Controller
+				control={control}
+				name={`itens.${idx}.unidade`}
+				render={({ field }) => (
+				  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+					{unidadesDisponiveis.map((opt) => (
+					  <label key={opt} style={{ display: 'flex', alignItems: 'center', gap: '15px', fontSize: '30px', cursor: 'pointer' }}>
+						<input
+						  type="radio"
+						  value={opt}
+						  checked={field.value === opt}
+						  onChange={() => field.onChange(opt)}
+						/>
+						{opt.toUpperCase()}
+					  </label>
+					))}
+				  </div>
+				)}
+			  />
+
+			  {/* Quantidade */}
+			  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+				<div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+				  <button
+					type="button"
+					onClick={() => {
+					  const atual = parseFloat(itensWatch[idx]?.quantidade || 0);
+					  const novo = Math.max(atual - 1, 0);
+					  setValue(`itens.${idx}.quantidade`, novo);
+					}}
+					style={{ padding: '10px 10px' }}
+				  >
+					–
+				  </button>
+
+				  <input
+					type="number"
+					step="any"
+					value={itensWatch[idx]?.quantidade || ''}
+					placeholder="Quantidade"
+					style={{ width: 150, height: 50, textAlign: 'center', fontSize: '20px' }}
+					{...register(`itens.${idx}.quantidade`, { required: 'Informe a quantidade.' })}
+				  />
+
+				  <button
+					type="button"
+					onClick={() => {
+					  const atual = parseFloat(itensWatch[idx]?.quantidade || 0);
+					  const novo = atual + 1;
+					  setValue(`itens.${idx}.quantidade`, novo);
+					}}
+					style={{ padding: '10px 10px' }}
+				  >
+					+
+				  </button>
+				</div>
+
+				{errors?.itens?.[idx]?.quantidade && (
+				  <p style={{ color: 'red', fontSize: '16px', marginTop: 4 }}>
+					{errors.itens[idx].quantidade.message}
+				  </p>
+				)}
+			  </div>
+
+			  {/* Botão remover */}
 			  <button
 				type="button"
-				onClick={() => {
-				  const atual = parseFloat(itensWatch[idx]?.quantidade || 0);
-				  const novo = atual + 1;
-				  setValue(`itens.${idx}.quantidade`, novo);
+				onClick={() => remove(idx)}
+				style={{
+				  background: 'none',
+				  border: 'none',
+				  cursor: 'pointer',
+				  fontSize: '40px',
+				  color: 'red',
 				}}
-				style={{ padding: '10px 10px' }}
+				title="Remover item"
 			  >
-				+
+				<FaTrashAlt />
 			  </button>
 			</div>
-          <button
-			  type="button"
-			  onClick={() => remove(idx)}
-			  style={{
-				background: 'none',
-				border: 'none',
-				cursor: 'pointer',
-				fontSize: '40px',
-				color: 'red',
-			  }}
-			  title="Remover item"
-			>
-			  <FaTrashAlt />
-			</button>
-        </div>
-      ))}
-      <button type="button" onClick={() => append({ produto: '', unidade: 'unidade', quantidade: '' })}>
+		  );
+		})}
+
+      <button type="button" onClick={() => append({ produto: null, unidade: 'unidade', quantidade: '' })}>
         + Adicionar item
       </button>
 	  
