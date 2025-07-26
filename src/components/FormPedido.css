@@ -1,0 +1,138 @@
+/* src/components/FormPedido.css */
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.input-full {
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input-textarea {
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 30px;
+}
+
+.error-text {
+  color: red;
+  margin-top: 4px;
+  font-size: 16px;
+}
+
+.item-wrapper {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.select-style {
+  font-size: 30px;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 30px;
+  margin-left: 4px;
+}
+
+.btn-icon.disabled {
+  cursor: not-allowed;
+  color: #999;
+}
+
+.btn-icon.active {
+  color: #007bff;
+}
+
+.unit-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.unit-label {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.qty-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qty-input-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.qty-input {
+  width: 150px;
+  height: 50px;
+  text-align: center;
+  font-size: 20px;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 40px;
+  color: red;
+}
+
+.obs-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.obs-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.obs-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-submit {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  font-size: 40px;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  border: 3px solid #ccc;
+  border-top: 3px solid #333;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

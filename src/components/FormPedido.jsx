@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useForm, useFieldArray, Controller, useWatch } from 'react-hook-form';
 import Select, { components } from 'react-select';
 import produtos from '../products';
-import { FaTrashAlt, FaSpinner } from 'react-icons/fa'; // FontAwesome
+import { FaTrashAlt, FaSpinner, FaStickyNote, FaPen } from 'react-icons/fa'; // FontAwesome
 
 
 export default function FormPedido() {
@@ -12,36 +12,27 @@ export default function FormPedido() {
 	defaultValues: { itens: [{ produto: '', unidade: 'unidade', quantidade: '' }] }
   });
   useEffect(() => {
-	  const atualizarDadosCliente = () => {
-		const clienteSalvo = localStorage.getItem("cliente");
-		if (clienteSalvo) {
-		  const dados = JSON.parse(clienteSalvo);
-		  setValue("nome", dados.nome || "");
-		  setValue("telefone", dados.telefone || "");
-		  setValue("endereco", dados.endereco || "");
-		} else {
-		  // Limpa os campos se não há cliente
-		  reset({
-			nome: '',
-			telefone: '',
-			endereco: '',
-			dataEntrega: '',
-			itens: [{ produto: '', unidade: 'unidade', quantidade: '' }]
-		  });
-		}
-	  };
+  const listener = () => {
+    const clienteSalvo = localStorage.getItem("cliente");
+    if (clienteSalvo) {
+      const dados = JSON.parse(clienteSalvo);
+      setValue("nome", dados.nome || "");
+      setValue("telefone", dados.telefone || "");
+      setValue("endereco", dados.endereco || "");
+    }
+  };
 
-	  atualizarDadosCliente();
-
-	  // Verifica mudanças no localStorage a cada 1 segundo
-	  const intervalo = setInterval(atualizarDadosCliente, 1000);
-
-	  return () => clearInterval(intervalo);
-	}, [setValue, reset]);
+  window.addEventListener("storage", listener);
+  return () => window.removeEventListener("storage", listener);
+}, [setValue]);
+	
+	
   const { fields, append, remove } = useFieldArray({ control, name: 'itens' });
   const itensWatch = useWatch({ control, name: 'itens', defaultValue: [] });
   
   const [loading, setLoading] = useState(false);
+  const [observacoesAtivas, setObservacoesAtivas] = useState([]);
+
 
   // component for option in menu
   const Option = props => (
@@ -199,45 +190,84 @@ export default function FormPedido() {
 	</div>
 	
       {fields.map((field, idx) => {
-		 const produtoSelecionado = itensWatch[idx]?.produto;
+		const produtoSelecionado = itensWatch[idx]?.produto;
 		const unidadesDisponiveis = produtoSelecionado?.unidades || ['UN', 'KG'];
 
 
 		  return (
-			<div key={field.id} style={{ marginBottom: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
+			<div key={field.id}>
+				<div style={{ marginBottom: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
 
-			  {/* Produto */}
-			  <Controller
-				control={control}
-				name={`itens.${idx}.produto`}
-				rules={{ required: 'Selecione um produto.' }}
-				render={({ field, fieldState }) => (
-				  <div style={{ flex: 3 }}>
-					<Select
-					  {...field}
-					  value={field.value || null}
-					  options={produtos}
-					  components={{ Option, SingleValue }}
-					  placeholder="Selecione produto"
-					  onChange={(selected) => {
-						field.onChange(selected);
-						if (selected?.unidades?.length) {
-						  setValue(`itens.${idx}.unidade`, selected.unidades[0]);
-						}
-					  }}
-					  styles={{
-						control: (base) => ({ ...base, fontSize: '30px' }),
-						option: (base) => ({ ...base, fontSize: '30px' }),
-						singleValue: (base) => ({ ...base, fontSize: '30px' }),
-					  }}
-					/>
-					{fieldState?.error && (
-					  <p style={{ color: 'red', fontSize: '16px' }}>{fieldState.error.message}</p>
-					)}
-				  </div>
+				  {/* Produto */}
+				  <Controller
+					control={control}
+					name={`itens.${idx}.produto`}
+					rules={{ required: 'Selecione um produto.' }}
+					render={({ field, fieldState }) => (
+					  <div style={{ flex: 3 }}>
+						<Select
+						  {...field}
+						  value={field.value || null}
+						  options={produtos}
+						  components={{ Option, SingleValue }}
+						  menuPortalTarget={document.body}
+						  placeholder="Selecione produto"
+						  onChange={(selected) => {
+							field.onChange(selected);
+							if (selected?.unidades?.length) {
+							  setValue(`itens.${idx}.unidade`, selected.unidades[0]);
+							}
+							// Define 'nenhuma' (string vazia) como valor inicial para cada categoria de observações
+						    if (selected?.observacoes) {
+							  selected.observacoes.forEach(obsCat => {
+							    setValue(`itens.${idx}.observacoes.${obsCat.categoria}`, '');
+							  });
+						    }
+						  }}
+						  styles={{
+							control: (base) => ({ ...base, fontSize: '30px' }),
+							option: (base) => ({ ...base, fontSize: '30px' }),
+							singleValue: (base) => ({ ...base, fontSize: '30px' }),
+						  }}
+						/>
+						{fieldState?.error && (
+						  <p style={{ color: 'red', fontSize: '16px' }}>{fieldState.error.message}</p>
+						)}
+					  </div>
 				)}
 			  />
-
+			{/* Botão para adicionar observações, se houver */}
+				<div style={{ marginTop: 8 }}>
+				  <button
+					  type="button"
+					  onClick={() =>
+						setObservacoesAtivas((prev) =>
+						  prev.includes(idx) ? prev.filter(i => i !== idx) : [...prev, idx]
+						)
+					  }
+					  disabled={
+						!produtoSelecionado?.observacoes ||
+						produtoSelecionado.observacoes.length === 0
+					  }
+					  title="Adicionar observações"
+					  style={{
+						background: 'none',
+						border: 'none',
+						cursor:
+						  !produtoSelecionado?.observacoes ||
+						  produtoSelecionado.observacoes.length === 0
+							? 'not-allowed'
+							: 'pointer',
+						fontSize: '30px',
+						color: observacoesAtivas.includes(idx) ? '#007bff' : '#999',
+						marginLeft: 4,
+					  }}
+					>
+					  <FaPen />
+					</button>
+				</div>
+				
+				
 			  {/* Unidade (dinâmica) */}
 			  <Controller
 				control={control}
@@ -318,6 +348,51 @@ export default function FormPedido() {
 			  >
 				<FaTrashAlt />
 			  </button>
+			</div>
+			
+			{observacoesAtivas.includes(idx) &&
+				  produtoSelecionado?.observacoes?.map((obsCat, catIndex) => (
+					<div key={catIndex} style={{ marginTop: 8 }}>
+					  <strong style={{ fontSize: '18px' }}>{obsCat.categoria.toUpperCase()}:</strong>
+					  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, marginTop: 4 }}>
+						{obsCat.opcoes.map((opcao, opcaoIndex) => (
+						  <label key={opcaoIndex} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+							<Controller
+							  control={control}
+							  name={`itens.${idx}.observacoes.${obsCat.categoria}`}
+							  render={({ field }) => (
+								<input
+								  type="radio"
+								  value={opcao}
+								  default="Nenhuma"
+								  checked={field.value === opcao}
+								  onChange={() => field.onChange(opcao)}
+								/>
+							  )}
+							/>
+							{opcao}
+						  </label>
+						))}
+
+						{/* Opção de "nenhuma observação" */}
+						<label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+						  <Controller
+							control={control}
+							name={`itens.${idx}.observacoes.${obsCat.categoria}`}
+							render={({ field }) => (
+							  <input
+								type="radio"
+								value=""
+								checked={field.value === ''}
+								onChange={() => field.onChange('')}
+							  />
+							)}
+						  />
+						  Nenhuma
+						</label>
+					  </div>
+					</div>
+				  ))}
 			</div>
 		  );
 		})}
