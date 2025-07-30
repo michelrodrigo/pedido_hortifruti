@@ -40,7 +40,7 @@ export default function Login({ onLoginSucesso }) {
 
         navigate('/');
       } else {
-        alert('❌ Login inválido');
+        alert('❌ Login inválido. Se você esqueceu seu email cadastrado ou senha, entre em contato conosco.');
       }
     } catch (err) {
       alert('❌ Erro: ' + err.message);

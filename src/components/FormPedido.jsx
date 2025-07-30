@@ -4,6 +4,7 @@ import { useForm, useFieldArray, Controller, useWatch } from 'react-hook-form';
 import Select, { components } from 'react-select';
 import produtos from '../products';
 import { FaTrashAlt, FaSpinner, FaStickyNote, FaPen } from 'react-icons/fa'; // FontAwesome
+import './FormPedido.css';
 
 
 export default function FormPedido() {
@@ -12,7 +13,7 @@ export default function FormPedido() {
 	defaultValues: { itens: [{ produto: '', unidade: 'unidade', quantidade: '' }] }
   });
   useEffect(() => {
-  const listener = () => {
+  const carregarDadosCliente = () => {
     const clienteSalvo = localStorage.getItem("cliente");
     if (clienteSalvo) {
       const dados = JSON.parse(clienteSalvo);
@@ -22,9 +23,16 @@ export default function FormPedido() {
     }
   };
 
+  // Carregar ao montar
+  carregarDadosCliente();
+
+  // Listener para mudanças em outras abas (opcional)
+  const listener = () => carregarDadosCliente();
   window.addEventListener("storage", listener);
+
   return () => window.removeEventListener("storage", listener);
 }, [setValue]);
+
 	
 	
   const { fields, append, remove } = useFieldArray({ control, name: 'itens' });
@@ -65,7 +73,8 @@ export default function FormPedido() {
 		  pedido: data.itens.map(item => ({
 			  produto: item.produto?.label || 'Produto não selecionado',
 			  quantidade: Number(item.quantidade) || 0,
-			  unidade: item.unidade
+			  unidade: item.unidade,
+			  observacoes: item.observacoes || {}
 			}))
 		};
 
@@ -91,8 +100,6 @@ export default function FormPedido() {
 		if (json.success) {
 		  alert('Pedido enviado com sucesso!');
 		  reset({
-			nome: '',
-			telefone: '',
 			itens: [{ produto: '', unidade: 'unidade', quantidade: '' }]
 		  });
 
@@ -140,7 +147,7 @@ export default function FormPedido() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
 	<div style={{ marginBottom: 16 }}>
-	<label>Nome:</label>
+	<label style={{fontSize: '32px'}}>Nome:</label>
 		<input
 		  {...register('nome', { required: 'Por favor, informe seu nome.' })}
 		  placeholder="Seu nome"
@@ -153,7 +160,7 @@ export default function FormPedido() {
 		)}
 	</div>
 	<div style={{ marginBottom: 16 }}>
-	  <label>Telefone:</label>
+	  <label style={{fontSize: '32px'}}>Telefone:</label>
 	  <input
 		{...register('telefone', {
 		  required: 'Por favor, informe seu telefone.',
@@ -170,7 +177,7 @@ export default function FormPedido() {
 	  )}
 	</div>
 		<div style={{ marginBottom: 16 }}>
-	  <label>Data de entrega:</label>
+	  <label style={{fontSize: '32px'}}>Data de entrega:</label>
 	  <input
 		type="date"
 		{...register('dataEntrega', { required: 'Informe a data de entrega.' })}
@@ -180,7 +187,7 @@ export default function FormPedido() {
 	</div>
 
 	<div style={{ marginBottom: 16 }}>
-	  <label>Endereço:</label>
+	  <label style={{fontSize: '32px'}}>Endereço:</label>
 	  <textarea
 		{...register('endereco', { required: 'Informe o endereço de entrega.' })}
 		placeholder="Endereço de entrega: Rua, número, bairro..."
@@ -259,7 +266,11 @@ export default function FormPedido() {
 							? 'not-allowed'
 							: 'pointer',
 						fontSize: '30px',
-						color: observacoesAtivas.includes(idx) ? '#007bff' : '#999',
+						color:
+						  !produtoSelecionado?.observacoes ||
+						  produtoSelecionado.observacoes.length === 0
+							? '#ccc' // cinza claro se não houver observações
+							: '#007bff', // azul se houver
 						marginLeft: 4,
 					  }}
 					>
@@ -352,11 +363,11 @@ export default function FormPedido() {
 			
 			{observacoesAtivas.includes(idx) &&
 				  produtoSelecionado?.observacoes?.map((obsCat, catIndex) => (
-					<div key={catIndex} style={{ marginTop: 8 }}>
-					  <strong style={{ fontSize: '18px' }}>{obsCat.categoria.toUpperCase()}:</strong>
+					<div key={catIndex} style={{ marginTop: 25 }}>					  
 					  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, marginTop: 4 }}>
+					  <strong style={{ fontSize: '30px' }}>{obsCat.categoria.toUpperCase()}:</strong>
 						{obsCat.opcoes.map((opcao, opcaoIndex) => (
-						  <label key={opcaoIndex} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+						  <label key={opcaoIndex} style={{ display: 'flex', alignItems: 'center', gap: 20, fontSize: '26px' }}>
 							<Controller
 							  control={control}
 							  name={`itens.${idx}.observacoes.${obsCat.categoria}`}
@@ -364,7 +375,6 @@ export default function FormPedido() {
 								<input
 								  type="radio"
 								  value={opcao}
-								  default="Nenhuma"
 								  checked={field.value === opcao}
 								  onChange={() => field.onChange(opcao)}
 								/>
@@ -375,7 +385,7 @@ export default function FormPedido() {
 						))}
 
 						{/* Opção de "nenhuma observação" */}
-						<label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+						<label style={{ display: 'flex', alignItems: 'center', gap: 30, fontSize: '26px' }}>
 						  <Controller
 							control={control}
 							name={`itens.${idx}.observacoes.${obsCat.categoria}`}
@@ -393,6 +403,9 @@ export default function FormPedido() {
 					  </div>
 					</div>
 				  ))}
+				  
+				  {/* Linha separadora entre os itens */}
+					<div style={{ borderTop: '2px solid #ccc', margin: '24px 0' }} />
 			</div>
 		  );
 		})}
@@ -421,6 +434,9 @@ export default function FormPedido() {
 		  )}
 		  {loading ? 'Enviando...' : 'Finalizar pedido'}
 		</button>
+		
     </form>
+	
   );
+  
 }
