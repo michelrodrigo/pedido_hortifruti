@@ -15,6 +15,13 @@ function doPost(e) {
   }
 }
 
+function formatarObservacoes(obs) {
+  if (!obs || typeof obs !== 'object') return '';
+  return Object.entries(obs)
+    .filter(([_, val]) => val !== '')
+    .map(([categoria, valor]) => `${categoria}: ${valor}`)
+    .join(' | ');
+}
 
 function salvarPedido(data) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Pedidos');
@@ -32,7 +39,8 @@ function salvarPedido(data) {
       data.endereco || '',      
       item.produto,
       item.quantidade,
-      item.unidade
+      item.unidade, 
+      formatarObservacoes(item.observacoes)
     ]);
   });
 
@@ -92,3 +100,95 @@ function loginCliente(data) {
     error: 'Email ou senha inválidos'
   })).setMimeType(ContentService.MimeType.JSON);
 }
+
+function gerarListaComprasPorData() {
+  const planilha = SpreadsheetApp.getActiveSpreadsheet();
+  const abaPedidos = planilha.getSheetByName("Pedidos");
+  const abaLista = planilha.getSheetByName("Lista de Compras");
+  const abaAtual = planilha.getActiveSheet();
+
+  const dataInput = abaAtual.getRange("B1").getValue();
+
+  if (!dataInput) {
+    SpreadsheetApp.getUi().alert("Por favor, preencha a data na célula B1.");
+    return;
+  }
+
+  const dataFormatada = Utilities.formatDate(new Date(dataInput), Session.getScriptTimeZone(), "yyyy-MM-dd");
+
+  const dadosPedidos = abaPedidos.getDataRange().getValues();
+  const cabecalho = dadosPedidos[0];
+
+  const colDataEntrega = cabecalho.indexOf("Data Entrega");
+  const colProduto = cabecalho.indexOf("Produto");
+  const colQuantidade = cabecalho.indexOf("Quantidade");
+  const colUnidade = cabecalho.indexOf("Unidade");
+  const colObservacoes = cabecalho.indexOf("Observações");
+
+  if (colDataEntrega === -1 || colProduto === -1 || colQuantidade === -1 || colUnidade === -1) {
+    SpreadsheetApp.getUi().alert("Verifique os nomes das colunas: 'Data Entrega', 'Produto', 'Quantidade' e 'Unidade'");
+    return;
+  }
+
+  const mapaProdutos = {};
+
+  for (let i = 1; i < dadosPedidos.length; i++) {
+    const linha = dadosPedidos[i];
+    const dataEntrega = linha[colDataEntrega];
+    const dataLinha = Utilities.formatDate(new Date(dataEntrega), Session.getScriptTimeZone(), "yyyy-MM-dd");
+
+    if (dataLinha === dataFormatada) {
+      let produto = linha[colProduto].toString().trim();
+      const observacoes = linha[colObservacoes] ? linha[colObservacoes].toString().trim() : '';
+
+      if (observacoes) {
+        produto += ` (${observacoes})`;
+      }
+      const unidade = linha[colUnidade].toString().trim();
+      const qtd = parseFloat(linha[colQuantidade]) || 0;
+
+      if (!mapaProdutos[produto]) {
+        mapaProdutos[produto] = {};
+      }
+
+      if (!mapaProdutos[produto][unidade]) {
+        mapaProdutos[produto][unidade] = 0;
+      }
+
+      mapaProdutos[produto][unidade] += qtd;
+    }
+  }
+
+  // Preserva A1 e B1 e limpa o restante
+  const ultimaLinha = abaLista.getLastRow();
+  if (ultimaLinha > 1) {
+    abaLista.getRange(2, 1, ultimaLinha - 1, abaLista.getMaxColumns()).clearContent();
+  }
+
+  // Escreve o título na linha 2
+  abaLista.getRange("A2:B2").setValues([["Produto", "Quantidade Total"]]);
+
+  const dadosSaida = [];
+
+  for (const produto in mapaProdutos) {
+    const unidades = mapaProdutos[produto];
+    const partes = [];
+
+    for (const unidade in unidades) {
+      const qtd = unidades[unidade];
+      partes.push(`${qtd} ${unidade}`);
+    }
+
+    dadosSaida.push([produto, partes.join(" + ")]);
+    dadosSaida.sort((a, b) => a[0].localeCompare(b[0], 'pt-BR'));
+
+  }
+
+  if (dadosSaida.length > 0) {
+    abaLista.getRange(3, 1, dadosSaida.length, 2).setValues(dadosSaida);
+  } else {
+    abaLista.getRange("A3").setValue("Nenhum pedido encontrado para a data informada.");
+  }
+}
+
+

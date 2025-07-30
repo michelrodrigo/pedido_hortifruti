@@ -100,6 +100,9 @@ export default function FormPedido() {
 		if (json.success) {
 		  alert('Pedido enviado com sucesso!');
 		  reset({
+			nome: data.nome,
+			telefone: data.telefone,
+			endereco: data.endereco,
 			itens: [{ produto: '', unidade: 'unidade', quantidade: '' }]
 		  });
 
