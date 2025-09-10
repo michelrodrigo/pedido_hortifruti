@@ -150,7 +150,7 @@ export default function FormPedido() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
 	<div style={{ marginBottom: 16 }}>
-	<label style={{fontSize: '32px'}}>Nome:</label>
+	<label style={{fontSize: '32px', color: 'white', textDecoration: 'none'}}>Nome:</label>
 		<input
 		  {...register('nome', { required: 'Por favor, informe seu nome.' })}
 		  placeholder="Seu nome"
@@ -163,7 +163,7 @@ export default function FormPedido() {
 		)}
 	</div>
 	<div style={{ marginBottom: 16 }}>
-	  <label style={{fontSize: '32px'}}>Telefone:</label>
+	  <label style={{fontSize: '32px', color: 'white', textDecoration: 'none'}}>Telefone:</label>
 	  <input
 		{...register('telefone', {
 		  required: 'Por favor, informe seu telefone.',
@@ -180,7 +180,7 @@ export default function FormPedido() {
 	  )}
 	</div>
 		<div style={{ marginBottom: 16 }}>
-	  <label style={{fontSize: '32px'}}>Data de entrega:</label>
+	  <label style={{fontSize: '32px', color: 'white', textDecoration: 'none'}}>Data de entrega:</label>
 	  <input
 		type="date"
 		{...register('dataEntrega', { required: 'Informe a data de entrega.' })}
@@ -190,7 +190,7 @@ export default function FormPedido() {
 	</div>
 
 	<div style={{ marginBottom: 16 }}>
-	  <label style={{fontSize: '32px'}}>Endereço:</label>
+	  <label style={{fontSize: '32px', color: 'white', textDecoration: 'none'}}>Endereço:</label>
 	  <textarea
 		{...register('endereco', { required: 'Informe o endereço de entrega.' })}
 		placeholder="Endereço de entrega: Rua, número, bairro..."
