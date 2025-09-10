@@ -24,19 +24,10 @@ const produtos = [
       {
         "categoria": "maturação",
         "opcoes": [
-          "verde",
           "maduro",
-          "média"
+		  "verde"
         ]
-      },
-      {
-        "categoria": "tamanho",
-        "opcoes": [
-          "pequeno",
-          "médio",
-          "grande"
-        ]
-      }
+      }      
     ]
   },
   {
@@ -49,17 +40,8 @@ const produtos = [
       {
         "categoria": "maturação",
         "opcoes": [
-          "verde",
           "maduro",
-          "média"
-        ]
-      },
-      {
-        "categoria": "tamanho",
-        "opcoes": [
-          "pequeno",
-          "médio",
-          "grande"
+		  "verde"
         ]
       }
     ]
@@ -78,15 +60,17 @@ const produtos = [
     "categoria": "frutas",
     "unidades": [
       "un",
-      "kg"
+      "kg",
+	  "penca",
+	  "cx"
     ],
     "observacoes": [
       {
         "categoria": "maturação",
         "opcoes": [
-          "verde",
           "maduro",
-          "média"
+		  "de vez",
+		  "verde"             
         ]
       }
     ]
@@ -96,15 +80,17 @@ const produtos = [
     "categoria": "frutas",
     "unidades": [
       "un",
-      "kg"
+      "kg",
+	  "penca",
+	  "cx"
     ],
     "observacoes": [
       {
         "categoria": "maturação",
         "opcoes": [
-          "verde",
           "maduro",
-          "média"
+		  "de vez",
+		  "verde" 
         ]
       }
     ]
@@ -114,15 +100,17 @@ const produtos = [
     "categoria": "frutas",
     "unidades": [
       "un",
-      "kg"
+      "kg",
+	  "penca",
+	  "cx"
     ],
     "observacoes": [
       {
         "categoria": "maturação",
         "opcoes": [
-          "verde",
           "maduro",
-          "média"
+		  "de vez",
+		  "verde" 
         ]
       }
     ]
@@ -159,16 +147,7 @@ const produtos = [
       "un",
       "kg"
     ],
-    "observacoes": [
-      {
-        "categoria": "maturação",
-        "opcoes": [
-          "verde",
-          "maduro",
-          "média"
-        ]
-      }
-    ]
+    "observacoes": []
   },
   {
     "nome": "Kiwi",
@@ -179,90 +158,697 @@ const produtos = [
     ],
     "observacoes": []
   },
-  { "nome": 'Laranja Pera Rio', unidades: ['un', 'kg'], categoria: 'frutas' },
-  { "nome": 'Laranja Bahia', unidades: ['un', 'kg'], categoria: 'frutas' },
-  { "nome": 'Limão Tahiti', unidades: ['un', 'kg'], categoria: 'frutas' },
-  { "nome": 'Limão Siciliano', unidades: ['un', 'kg'], categoria: 'frutas' },
-  { "nome": 'Maçã Fuji', unidades: ['un', 'kg'], categoria: 'frutas' },
-  { "nome": 'Maçã Gala', unidades: ['un', 'kg'], categoria: 'frutas' },
-  { "nome": 'Maçã Verde', unidades: ['un', 'kg'], categoria: 'frutas' },
-  { "nome": 'Mamão Formoso', unidades: ['un', 'kg'], categoria: 'frutas' },
-  { "nome": 'Mamão Papaya', unidades: ['un', 'kg'], categoria: 'frutas' },
-  { "nome": 'Manga Palmer', unidades: ['un', 'kg'], categoria: 'frutas' },
-  { "nome": 'Manga Tomy', unidades: ['un', 'kg'], categoria: 'frutas' },
-  { "nome": 'Maracujá', unidades: ['un', 'kg'], categoria: 'frutas' },
-  { "nome": 'Melancia', unidades: ['un', 'kg'], categoria: 'frutas' },
-  { "nome": 'Melão', unidades: ['un', 'kg'], categoria: 'frutas' },
-  { "nome": 'Mexerica Pokan', unidades: ['un', 'kg'], categoria: 'frutas' },
-  { "nome": 'Morango', unidades: ['bdj', 'kg'], categoria: 'frutas' },
-  { "nome": 'Morango Cart', unidades: ['bdj', 'kg'], categoria: 'frutas' },
-  { "nome": 'Pêra', unidades: ['un', 'kg'], categoria: 'frutas' },
-  { "nome": 'Pêssego', unidades: ['un', 'kg'], categoria: 'frutas' },
-  { "nome": 'Pitaya', unidades: ['un', 'kg'], categoria: 'frutas' },
-  { "nome": 'Tangerina Importada', unidades: ['un', 'kg'], categoria: 'frutas' },
+  { 
+	"nome": 'Laranja Pera Rio', 
+	"categoria": 'frutas',
+	"unidades": [
+		"un", 
+		"kg",
+		"sc"
+	], 
+	"observacoes": []
+  },
+  { 
+	"nome": 'Laranja Bahia',
+	"categoria": 'frutas',
+	"unidades": [
+		'un', 
+		'kg',
+		'cx'
+	], 
+	"observacoes": []
+  },
+  { 
+	"nome": 'Limão Tahiti', 
+	"categoria": 'frutas',
+	"unidades": [
+		'un', 
+		'kg',
+		'sc'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Limão Siciliano',
+	"categoria": 'frutas',
+	"unidades": [
+		'un', 
+		'kg',
+		'cx'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Maçã Fuji', 
+	"categoria": 'frutas',
+	"unidades": [
+		'un',
+		'kg',
+		'cx'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Maçã Gala', 
+	"categoria": 'frutas',
+	"unidades": [
+		'un',
+		'kg',
+		'cx'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Maçã Verde', 
+	"categoria": 'frutas',
+	"unidades": [
+		'un',
+		'kg',
+		'cx'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Mamão Formoso',
+	"categoria": 'frutas',
+	"unidades": [
+		'un',
+		'kg',
+		'cx'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Mamão Papaya',
+	"categoria": 'frutas',
+	"unidades": [
+		'un', 
+		'kg',
+		'cx'
+	],
+	"observacoes": [
+      {
+        "categoria": "maturação",
+        "opcoes": [
+          "maduro",
+		  "de vez",
+		  "verde" 
+        ]
+      }
+    ]		
+  },
+  { 
+	"nome": 'Manga Palmer', 
+	"categoria": 'frutas',
+	"unidades": [
+		'un',
+		'kg',
+		'cx'
+	], 
+	"observacoes": [
+      {
+        "categoria": "maturação",
+        "opcoes": [
+          "maduro",
+		  "de vez",
+		  "verde" 
+        ]
+      }
+    ]
+  },
+  { 
+	"nome": 'Manga Tomy', 
+	"categoria": 'frutas',
+	"unidades": [
+		'un',
+		'kg',
+		'cx'
+	],
+"observacoes": [
+      {
+        "categoria": "maturação",
+        "opcoes": [
+          "maduro",
+		  "de vez",
+		  "verde" 
+        ]
+      }
+    ]	
+  },
+  { 
+	"nome": 'Maracujá',
+	"categoria": 'frutas',
+ 	"unidades": [
+		'un', 
+		'kg', 
+		'sc'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Melancia',
+	"categoria": 'frutas', 
+	"unidades": [
+		'un', 
+		'kg'
+	],
+	"observacoes": []	
+  },
+  { 
+	"nome": 'Melão', 
+	"categoria": 'frutas',
+	"unidades": [
+		'un', 
+		'kg'
+	],
+	"observacoes": []	
+  },
+  { 
+	"nome": 'Mexerica Pokan', 
+	"categoria": 'frutas',
+	"unidades": [
+		'un', 
+		'kg'
+	],
+    "observacoes": []
+  },
+  { 
+	"nome": 'Morango', 
+	"categoria": 'frutas',
+	"unidades": [
+		'bdj', 
+		'cx'
+	], 
+	"observacoes": [] 
+  },
+  { 
+	"nome": 'Morango Cart', 
+	"categoria": 'frutas',
+	"unidades": [
+		'bdj', 
+		'cx'
+	],  
+	"observacoes": []
+  },
+  { 
+	"nome": 'Pêra', 
+	"categoria": 'frutas',
+	"unidades": [
+		'un', 
+		'kg',
+		'cx'
+	],  
+	"observacoes": []
+  },
+  { 
+	"nome": 'Pêssego',
+	"categoria": 'frutas',
+	"unidades": [
+		'un', 
+		'kg'
+	],  
+	"observacoes": []
+  },
+  { 
+	"nome": 'Pitaya', 
+	"categoria": 'frutas',
+	"unidades": [
+		'un', 
+		'kg'
+	],
+	"observacoes": []	
+  },
+  { 
+	"nome": 'Tangerina Importada', 
+	"categoria": 'frutas',
+	"unidades": [
+		'un', 
+		'kg'
+	], 
+	"observacoes": []
+  },
   {
-    "nome": "Uva Rubi",
+    "nome": "Uva Vitória",
     "categoria": "frutas",
     "unidades": [
-      "bdj",
+      "bdj"
+    ],
+    "observacoes": []
+  },
+  {
+    "nome": "Uva Thompson",
+    "categoria": "frutas",
+    "unidades": [
+      "bdj"
+    ],
+    "observacoes": []
+  },
+  
+  //Polpas
+  {
+    "nome": "Polpa Cong. Abacaxi",
+    "categoria": "polpas",
+    "unidades": [
       "kg"
     ],
     "observacoes": []
   },
+  {
+    "nome": "Polpa Cong. Acerola",
+    "categoria": "polpas",
+    "unidades": [
+      "kg"
+    ],
+    "observacoes": []
+  },
+  {
+    "nome": "Polpa Cong. Amora",
+    "categoria": "polpas",
+    "unidades": [
+      "kg"
+    ],
+    "observacoes": []
+  },
+  {
+    "nome": "Polpa Cong. Caju",
+    "categoria": "polpas",
+    "unidades": [
+      "kg"
+    ],
+    "observacoes": []
+  },
+  {
+    "nome": "Polpa Cong. Cupuaçu",
+    "categoria": "polpas",
+    "unidades": [
+      "kg"
+    ],
+    "observacoes": []
+  },
+  {
+    "nome": "Polpa Cong. Framboesa",
+    "categoria": "polpas",
+    "unidades": [
+      "kg"
+    ],
+    "observacoes": []
+  },
+  {
+    "nome": "Polpa Cong. Graviola",
+    "categoria": "polpas",
+    "unidades": [
+      "kg"
+    ],
+    "observacoes": []
+  },
+  {
+    "nome": "Polpa Cong. Manga",
+    "categoria": "polpas",
+    "unidades": [
+      "kg"
+    ],
+    "observacoes": []
+  },
+  {
+    "nome": "Polpa Cong. Maracujá",
+    "categoria": "polpas",
+    "unidades": [
+      "kg"
+    ],
+    "observacoes": []
+  },
+  {
+    "nome": "Polpa Cong. Mirtilo",
+    "categoria": "polpas",
+    "unidades": [
+      "kg"
+    ],
+    "observacoes": []
+  },
+  {
+    "nome": "Polpa Cong. Morango",
+    "categoria": "polpas",
+    "unidades": [
+      "kg"
+    ],
+    "observacoes": []
+  },
+  {
+    "nome": "Polpa Cong. Goiaba",
+    "categoria": "polpas",
+    "unidades": [
+      "kg"
+    ],
+    "observacoes": []
+  },
+  {
+    "nome": "Polpa Cong. Frutas Vermelhas",
+    "categoria": "polpas",
+    "unidades": [
+      "kg"
+    ],
+    "observacoes": []
+  },
+  
+  
   //legumes
-  { "nome": 'Abóbora Moranga', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Abobrinha Italiana', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Batata Barôa', unidades: ['bdj', 'kg'], categoria: 'legumes' },
+  { 
+	"nome": 'Abóbora Moranga', 
+	"categoria": 'legumes',
+	"unidades": [
+		'un', 
+		'kg'
+	], 
+	"observacoes": []
+  },
+  { 
+	"nome": 'Abobrinha Italiana', 
+	"categoria": 'legumes',
+	"unidades": [
+		'un', 
+		'kg'
+	], 
+	"observacoes": []
+  },
+  { 
+	"nome": 'Batata Barôa', 
+	"categoria": 'legumes', 
+	"unidades": [
+		'bdj', 
+		'kg'
+	], 
+	"observacoes": []
+  },
   {
     "nome": "Batata Asterix",
     "categoria": "legumes",
     "unidades": [
       "un",
-      "kg"
+      "kg",
+	  'sc'
     ],
-    "observacoes": [
-      {
-        "categoria": "tamanho",
-        "opcoes": [
-          "pequena",
-          "média",
-          "grande"
-        ]
-      }
-    ]
+    "observacoes": []     
   },
-  { "nome": 'Batata Bolinha', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Batata Doce Branca', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Batata Doce Roxa', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Batata Inglesa Clone', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Batata Inglesa', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Batata Suja', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Berinjela', unidades: ['um', 'kg'], categoria: 'legumes' },
-  { "nome": 'Beterraba', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Brócolis', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Cebola', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Cebola Cocão', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Cebola Miúda', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Cebola Roxa', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Cenoura', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Chuchu', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Couve Flor', unidades: ['un'], categoria: 'legumes' },
-  { "nome": 'Ervilha', unidades: ['bdj'], categoria: 'legumes' },
-  { "nome": 'Inhame/cará', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Mandioca Amarela', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Mandioca Cacau', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Pepino', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Pepino Japonês', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Pimentão Amarelo', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Pimentão Verde', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Pimentão Vermelho', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Quiabo', unidades: ['bdj', 'kg'], categoria: 'legumes' },
-  { "nome": 'Repolho', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Repolho Roxo', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Tomate Andreia', unidades: ['un', 'kg'], categoria: 'legumes' },
-  { "nome": 'Tomate SG Amarelo', unidades: ['bdj', 'kg'], categoria: 'legumes' },
-  { "nome": 'Tomate SG Vermelho', unidades: ['bdj', 'kg'], categoria: 'legumes' },
-  { "nome": 'Vagem', unidades: ['bdj', 'kg'], categoria: 'legumes' },
+  { 
+	"nome": 'Batata Bolinha', 
+	"categoria": 'legumes',
+	"unidades": [
+		'un', 
+		'kg',
+		'sc'
+	], 
+	"observacoes": []
+  },
+  { 
+	"nome": 'Batata Doce Branca', 
+	"categoria": 'legumes',
+	"unidades": [
+		'un',
+		'kg'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Batata Doce Roxa',
+	"categoria": 'legumes',
+	"unidades": [
+		'un',
+		'kg'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Batata Inglesa Clone',
+	"categoria": 'legumes',
+	"unidades": [
+		'un',
+		'kg',
+		'sc'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Batata Inglesa', 
+	"categoria": 'legumes', 
+	"unidades": [
+		'un',
+		'kg',
+		'sc'
+	], 
+	"observacoes": []
+  },
+  { 
+	"nome": 'Batata Suja',
+	"categoria": 'legumes',
+	"unidades": [
+		'un',
+		'kg',
+		'sc'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Berinjela', 
+	"categoria": 'legumes',
+	"unidades": [
+		'un', 
+		'kg'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Beterraba', 
+	"categoria": 'legumes',
+	"unidades": [
+		'un', 
+		'kg',
+		'sc'
+	],  
+	"observacoes": []
+  },
+  { 
+	"nome": 'Brócolis', 
+	"categoria": 'legumes',
+	"unidades": [
+		'un'
+	],
+	"observacoes": []	
+  },
+  { 
+	"nome": 'Cebola', 
+	"categoria": 'legumes',
+	"unidades": [
+		'un', 
+		'kg',
+		'sc'
+	],
+	"observacoes": []	
+  },
+  { 
+	"nome": 'Cebola Cocão', 
+	"categoria": 'legumes',
+	"unidades": [
+		'un',
+		'kg',
+		'sc'
+	],  
+	"observacoes": []
+  },
+  { 
+	"nome": 'Cebola Miúda', 
+	"categoria": 'legumes', 
+	"unidades": [
+		'un',
+		'kg',
+		'sc'
+	], 
+	"observacoes": []
+  },
+  { 
+	"nome": 'Cebola Roxa', 
+	"categoria": 'legumes',
+	"unidades": [
+		'un', 
+		'kg',
+		'sc'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Cenoura', 
+	"categoria": 'legumes', 
+	"unidades": [
+		'un', 
+		'kg',
+		'cx'
+	], 
+	"observacoes": []
+  },
+  { 
+	"nome": 'Chuchu', 
+	"categoria": 'legumes',
+	"unidades": [
+		'un', 
+		'kg'
+	], 
+	"observacoes": []
+  },
+  { 
+	"nome": 'Couve Flor', 
+	"categoria": 'legumes',
+	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Ervilha', 
+	"categoria": 'legumes',
+	"unidades": [
+		'bdj'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Inhame/cará',
+	"categoria": 'legumes',
+	"unidades": [
+		'un', 
+		'kg'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Mandioca Amarela', 
+	"categoria": 'legumes',
+	"unidades": [
+		'un', 
+		'kg',
+		'bdj'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Mandioca Cacau', 
+	"categoria": 'legumes',
+	"unidades": [
+		'un',
+		'kg',
+		'bdj'
+	], 
+	"observacoes": []
+  },
+  { 
+	"nome": 'Pepino',
+	"categoria": 'legumes',
+	"unidades": [
+		'un', 
+		'kg'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Pepino Japonês', 
+	"categoria": 'legumes',
+	"unidades": [
+		'kg',
+		'bdj'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Pimentão Amarelo',
+	"categoria": 'legumes',
+	"unidades": [
+		'un',
+		'kg'
+	],
+	"observacoes": []
+  },
+  {
+	"nome": 'Pimentão Verde', 
+	"categoria": 'legumes',
+	"unidades": [
+		'un',
+		'kg'
+	],
+	"observacoes": []
+  },
+  {
+	"nome": 'Pimentão Vermelho',
+	"categoria": 'legumes',
+	"unidades": [
+		'un',
+		'kg'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Quiabo',
+	"categoria": 'legumes',
+	"unidades": [
+		'bdj',
+		'kg'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Repolho Verde', 
+	"categoria": 'legumes',
+	"unidades": [
+		'un',
+		'kg'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Repolho Roxo',
+	"categoria": 'legumes',
+	"unidades": [
+		'un',
+		'kg'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Tomate Andreia',
+	"categoria": 'legumes',
+ 	"unidades": [
+		'un',
+		'kg',
+		'cx'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Tomate SG Amarelo', 
+	"categoria": 'legumes',
+	"unidades": [
+		'bdj',
+		'kg',
+		'cx'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Tomate SG Vermelho',
+	"categoria": 'legumes',
+	"unidades": [
+		'bdj',
+		'kg',
+		'cx'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Vagem',
+	"categoria": 'legumes',
+	"unidades": [
+		'bdj',
+		'kg'
+	],
+	"observacoes": []
+  },
 
   // OUTROS
   {
@@ -270,64 +856,248 @@ const produtos = [
     "categoria": "outros",
     "unidades": [
       "un",
-      "pente"
+      "kg"
     ],
-    "observacoes": [
-      {
-        "categoria": "tipo",
-        "opcoes": [
-          "com casca",
-          "descascado"
-        ]
-      }
-    ]
+    "observacoes": []
   },
-  { "nome": 'Alho Descascado', unidades: ['bdj', 'kg'], categoria: 'outros' },
-  { "nome": 'Gengibre', unidades: ['un', 'bdj'], categoria: 'outros' },
-  { "nome": 'Ovo Branco', unidades: ['un', 'pente'], categoria: 'outros' },
-  { "nome": 'Ovo de Codorna', unidades: ['un', 'pente'], categoria: 'outros' },
+  { 
+	"nome": 'Alho Descascado', 
+	"categoria": 'outros',
+	"unidades": [
+		'bdj',
+		'kg'
+	],
+	"observacoes": []
+  },
+  {
+	"nome": 'Gengibre', 
+	"categoria": 'outros',
+	"unidades": [
+		'un', 
+		'bdj',
+		'kg'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Ovo Branco', 
+	"categoria": 'outros',
+	"unidades": [
+		'pente',
+		'cx'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Ovo de Codorna',
+	"categoria": 'outros',
+	"unidades": [
+		'pente'
+	],
+	"observacoes": []
+  },
 
   // VERDURAS
-  { "nome": 'Acelga', unidades: ['un'], categoria: 'verduras' },
-  { "nome": 'Agrião', unidades: ['un'], categoria: 'verduras' },
-  { "nome": 'Alecrim', unidades: ['un'], categoria: 'verduras' },
-  { "nome": 'Alface Americana', unidades: ['un'], categoria: 'verduras' },
+  { 
+	"nome": 'Acelga', 
+	"categoria": 'verduras',
+	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  },
+  {
+	"nome": 'Agrião Hidropônico',
+	"categoria": 'verduras',
+	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  },	
+  { 
+	"nome": 'Alecrim', 
+	"categoria": 'verduras',
+	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Alface Americana',
+	"categoria": 'verduras',
+ 	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  },
   {
     "nome": "Alface Crespa",
     "categoria": "verduras",
     "unidades": [
       "un"
-    ],
-    "observacoes": [
-      {
-        "categoria": "tipo de folha",
-        "opcoes": [
-          "inteira",
-          "picada"
-        ]
-      }
-    ]
+    ],    
+	"observacoes": []
   },
-  { "nome": 'Alface Lisa', unidades: ['un'], categoria: 'verduras' },
-  { "nome": 'Alface Roxa', unidades: ['un'], categoria: 'verduras' },
-  { "nome": 'Alho poró', unidades: ['un'], categoria: 'verduras' },
-  { "nome": 'Almeirão', unidades: ['un'], categoria: 'verduras' },
-  { "nome": 'Cebolete', unidades: ['un'], categoria: 'verduras' },
-  { "nome": 'Cebolinha', unidades: ['un'], categoria: 'verduras' },
-  { "nome": 'Chicória', unidades: ['un'], categoria: 'verduras' },
-  { "nome": 'Coentro', unidades: ['un'], categoria: 'verduras' },
-  { "nome": 'Couve', unidades: ['un'], categoria: 'verduras' },
-  { "nome": 'Espinafre', unidades: ['un'], categoria: 'verduras' },
-  { "nome": 'Hortelã', unidades: ['un'], categoria: 'verduras' },
-  { "nome": 'Manjericão', unidades: ['un'], categoria: 'verduras' },
-  { "nome": 'Mostarda', unidades: ['un'], categoria: 'verduras' },
-  { "nome": 'Radicchio', unidades: ['un'], categoria: 'verduras' },
-  { "nome": 'Rúcula', unidades: ['un'], categoria: 'verduras' },
-  { "nome": 'Salsa', unidades: ['un'], categoria: 'verduras' },
-  { "nome": 'Salsa Crespa', unidades: ['un'], categoria: 'verduras' },
-  { "nome": 'Salsão', unidades: ['un'], categoria: 'verduras' },
-  { "nome": 'Sálvia', unidades: ['un'], categoria: 'verduras' },
-  { "nome": 'Tomilho', unidades: ['un'], categoria: 'verduras' }
+  { 
+	"nome": 'Alface Lisa', 
+	"categoria": 'verduras',
+	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  },
+  {
+	"nome": 'Alface Roxa',
+	"categoria": 'verduras',
+ 	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Alho poró',
+	"categoria": 'verduras',
+	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  },
+  {
+	"nome": 'Almeirão', 
+	"categoria": 'verduras',
+	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  },
+  {
+	"nome": 'Cebolete',
+	"categoria": 'verduras',
+ 	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  },
+  {
+	"nome": 'Cebolinha', 
+	"categoria": 'verduras',
+	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Chicória',
+	"categoria": 'verduras',
+	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  },
+  {
+	"nome": 'Coentro', 
+	"categoria": 'verduras',
+	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  },
+  {
+	"nome": 'Couve',
+	"categoria": 'verduras',
+	"unidades": [
+		'un'
+	],	
+	"observacoes": []
+  },
+  { 
+	"nome": 'Espinafre', 
+	"categoria": 'verduras',
+	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Hortelã', 
+	"categoria": 'verduras', 
+	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Manjericão',
+	"categoria": 'verduras',
+	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Mostarda',
+	"categoria": 'verduras',
+	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Radicchio',
+	"categoria": 'verduras',
+ 	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  },
+  {
+	"nome": 'Rúcula',
+	"categoria": 'verduras',
+	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  },
+  {
+	"nome": 'Salsa', 
+	 "categoria": 'verduras',
+	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  },
+  {
+	"nome": 'Salsa Crespa',
+	"categoria": 'verduras',
+ 	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Salsão', 
+	"categoria": 'verduras', 
+	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Sálvia',
+	"categoria": 'verduras',
+	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  },
+  { 
+	"nome": 'Tomilho', 
+	"categoria": 'verduras',
+	"unidades": [
+		'un'
+	],
+	"observacoes": []
+  }
 ];
 
 // Associa imagem ao produto com base na pasta da categoria e nome do arquivo

@@ -367,10 +367,10 @@ export default function FormPedido() {
 			{observacoesAtivas.includes(idx) &&
 				  produtoSelecionado?.observacoes?.map((obsCat, catIndex) => (
 					<div key={catIndex} style={{ marginTop: 25 }}>					  
-					  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, marginTop: 4 }}>
+					  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 40, marginTop: 4 }}>
 					  <strong style={{ fontSize: '30px' }}>{obsCat.categoria.toUpperCase()}:</strong>
 						{obsCat.opcoes.map((opcao, opcaoIndex) => (
-						  <label key={opcaoIndex} style={{ display: 'flex', alignItems: 'center', gap: 20, fontSize: '26px' }}>
+						  <label key={opcaoIndex} style={{ display: 'flex', alignItems: 'center', gap: 16, fontSize: '26px' }}>
 							<Controller
 							  control={control}
 							  name={`itens.${idx}.observacoes.${obsCat.categoria}`}
@@ -388,7 +388,7 @@ export default function FormPedido() {
 						))}
 
 						{/* Opção de "nenhuma observação" */}
-						<label style={{ display: 'flex', alignItems: 'center', gap: 30, fontSize: '26px' }}>
+						<label style={{ display: 'flex', alignItems: 'center', gap: 16, fontSize: '26px' }}>
 						  <Controller
 							control={control}
 							name={`itens.${idx}.observacoes.${obsCat.categoria}`}
@@ -401,7 +401,7 @@ export default function FormPedido() {
 							  />
 							)}
 						  />
-						  Nenhuma
+						  nenhuma
 						</label>
 					  </div>
 					</div>
